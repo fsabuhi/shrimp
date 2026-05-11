@@ -1,5 +1,5 @@
-from shrimp.core import Shrimp, ScopedShrimp
+from shrimp.core import ResolveResult, Shrimp, ScopedShrimp
 from shrimp.scheme import Scheme
 
-__all__ = ["Shrimp", "ScopedShrimp", "Scheme"]
+__all__ = ["ResolveResult", "Shrimp", "ScopedShrimp", "Scheme"]
 __version__ = "0.1.0"
