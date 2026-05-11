@@ -1,8 +1,11 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import redis as redis_lib
+
+if TYPE_CHECKING:
+    from shrimp.scheme import Scheme
 
 # Two-phase atomic encode:
 # Phase 1 (Python): INCR counter → n, format short_id via scheme.
@@ -23,11 +26,13 @@ return {ARGV[3], '1'}
 
 
 class RedisBackend:
-    def __init__(self, url: str = "redis://localhost:6379", key_prefix: str = "shrimp") -> None:
+    def __init__(
+        self, scheme: Scheme, url: str = "redis://localhost:6379", key_prefix: str = "shrimp"
+    ) -> None:
         self._client = redis_lib.Redis.from_url(url, decode_responses=True)
         self._prefix = key_prefix
         self._script = self._client.register_script(_LUA_HSETNX_AND_REV)
-        self._scheme: Any = None  # injected by Shrimp
+        self._scheme = scheme
 
     def _keys(self, scope: str, category: str) -> tuple[str, str, str]:
         p = f"{self._prefix}:{scope}:{category}"

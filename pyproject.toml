@@ -3,21 +3,73 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "shrimp"
+name = "shrimp-llm"
 version = "0.1.0"
-description = "Tiny IDs for big language models. Maps UUIDs to short, category-prefixed aliases optimized for LLM context windows."
+description = "Shorten UUIDs for LLMs. Maps long IDs to tiny, readable, category-prefixed aliases — cut tokens, prevent hallucination, and simplify agent tool calls."
+readme = "README.md"
+license = {text = "MIT"}
 requires-python = ">=3.10"
-dependencies = [
-    "redis>=5.0",
+authors = [
+    {name = "Sabuhi Fetelizade", email = "sebuhifetelizade@gmail.com"},
 ]
+keywords = [
+    "llm",
+    "uuid",
+    "short-id",
+    "tokens",
+    "token-optimization",
+    "context-window",
+    "rag",
+    "agents",
+    "ai-agents",
+    "hallucination",
+    "openai",
+    "gpt",
+    "claude",
+    "langchain",
+    "llamaindex",
+    "prompt-engineering",
+    "function-calling",
+    "tool-use",
+    "id-mapping",
+    "alias",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Typing :: Typed",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/fsabuhi/shrimp"
+Documentation = "https://github.com/fsabuhi/shrimp#readme"
+Repository = "https://github.com/fsabuhi/shrimp"
+Issues = "https://github.com/fsabuhi/shrimp/issues"
+Changelog = "https://github.com/fsabuhi/shrimp/releases"
 
 [project.optional-dependencies]
+redis = [
+    "redis>=5.0",
+]
 dev = [
     "pytest>=8.0",
     "pytest-cov",
     "fakeredis>=2.0",
     "mypy>=1.9",
     "ruff>=0.4",
+    "redis>=5.0",
 ]
 
 [tool.hatch.build.targets.wheel]

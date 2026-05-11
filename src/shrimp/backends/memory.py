@@ -2,20 +2,22 @@ from __future__ import annotations
 
 import threading
 from collections import defaultdict
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from shrimp.scheme import Scheme
 
 
 class MemoryBackend:
     """In-process backend. No persistence across restarts. Safe for tests and single-process use."""
 
-    def __init__(self) -> None:
+    def __init__(self, scheme: Scheme) -> None:
         self._lock = threading.Lock()
         # {scope: {category: {"fwd": {real_id: short_id}, "rev": {short_id: (category, real_id)}, "counter": int}}}
         self._data: dict[str, dict[str, Any]] = defaultdict(
             lambda: defaultdict(lambda: {"fwd": {}, "rev": {}, "counter": 0})
         )
-        # scheme is injected by Shrimp before first use
-        self._scheme: Any = None
+        self._scheme = scheme
 
     def _scope_cat(self, scope: str, category: str) -> dict[str, Any]:
         return self._data[scope][category]

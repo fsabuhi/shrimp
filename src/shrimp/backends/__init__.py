@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 
 @runtime_checkable
@@ -19,6 +19,14 @@ class Backend(Protocol):
 
 
 from shrimp.backends.memory import MemoryBackend
-from shrimp.backends.redis import RedisBackend
+
+
+def __getattr__(name: str) -> Any:
+    if name == "RedisBackend":
+        from shrimp.backends.redis import RedisBackend
+
+        return RedisBackend
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
 
 __all__ = ["Backend", "MemoryBackend", "RedisBackend"]
